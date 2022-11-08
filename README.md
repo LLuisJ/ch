@@ -2,6 +2,13 @@
 
 ch (short for check hash/create hash) is a tool to create file/string hashes and also check them.
 
+Installation (this assumes that you have setup go correctly):
+
+1. `git clone https://github.com/LLuisJ/ch.git`
+2. `cd ch`
+3. `go build .`
+4. (Optional to include it in the path) `go install`
+
 Usage:
 ```
 ch <mode> [arguments...] <algorithm>
