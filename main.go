@@ -9,6 +9,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/fatih/color"
+	"golang.org/x/crypto/md4"
+	"golang.org/x/crypto/sha3"
 	"hash"
 	"os"
 	"strings"
@@ -22,6 +24,15 @@ func main() {
 		os.Exit(1)
 	}
 	op := os.Args[1]
+	if op == "list" {
+		algorithms := []string{"MD4", "MD5", "SHA1", "SHA224", "SHA256", "SHA384", "SHA512", "SHA3-224", "SHA3-256",
+			"SHA3-384", "SHA3-512"}
+		fmt.Println("Algorithms:")
+		for _, algorithm := range algorithms {
+			fmt.Printf("	%s\n", algorithm)
+		}
+		os.Exit(0)
+	}
 	opTypes := make(map[string]fn, 4)
 	opTypes["check"] = check
 	opTypes["checks"] = checks
@@ -162,20 +173,31 @@ func createHash(content []byte, file *string, algorithm string, isFile bool) err
 }
 
 func hashBytes(content []byte, algorithm string) (*string, error) {
+	algorithmLower := strings.ToLower(algorithm)
 	var hashCtx hash.Hash
-	switch strings.ToLower(algorithm) {
+	switch algorithmLower {
+	case "md4":
+		hashCtx = md4.New()
 	case "md5":
 		hashCtx = md5.New()
 	case "sha1":
 		hashCtx = sha1.New()
 	case "sha224":
-		hashCtx = sha256.New()
+		hashCtx = sha256.New224()
 	case "sha256":
 		hashCtx = sha256.New()
 	case "sha384":
-		hashCtx = sha512.New()
+		hashCtx = sha512.New384()
 	case "sha512":
 		hashCtx = sha512.New()
+	case "sha3-224":
+		hashCtx = sha3.New224()
+	case "sha3-256":
+		hashCtx = sha3.New256()
+	case "sha3-384":
+		hashCtx = sha3.New384()
+	case "sha3-512":
+		hashCtx = sha3.New512()
 	default:
 		return nil, fmt.Errorf("unknown algorithm %s", algorithm)
 	}
