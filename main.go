@@ -25,12 +25,18 @@ func main() {
 	}
 	op := os.Args[1]
 	if op == "list" {
-		algorithms := []string{"MD4", "MD5", "SHA1", "SHA224", "SHA256", "SHA384", "SHA512", "SHA3-224", "SHA3-256",
-			"SHA3-384", "SHA3-512"}
 		fmt.Println("Algorithms:")
-		for _, algorithm := range algorithms {
-			fmt.Printf("	%s\n", algorithm)
-		}
+		fmt.Println("	MD4")
+		fmt.Println("	MD5")
+		fmt.Println("	SHA1")
+		fmt.Println("	SHA224")
+		fmt.Println("	SHA256")
+		fmt.Println("	SHA384")
+		fmt.Println("	SHA512")
+		fmt.Println("	SHA3-224")
+		fmt.Println("	SHA3-256")
+		fmt.Println("	SHA3-384")
+		fmt.Println("	SHA3-512")
 		os.Exit(0)
 	}
 	opTypes := make(map[string]fn, 4)
